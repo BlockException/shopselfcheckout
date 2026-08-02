@@ -1,5 +1,7 @@
 # Aldi Selbstbediener Kassentechnik - Enterprise Microservice Architektur
 
+![CI/CD](https://github.com/BlockException/aldiselfcheckout/actions/workflows/ci-cd.yml/badge.svg)
+
 Eine komplexe, multi-language Microservice-Architektur für eine Aldi Selbstbediener Kasse.
 
 ---
@@ -101,10 +103,45 @@ Eine komplexe, multi-language Microservice-Architektur für eine Aldi Selbstbedi
 
 ---
 
-## Projekt-Struktur
+## CI/CD
+
+Die Pipeline (`.github/workflows/ci-cd.yml`) baut und prüft jeden Service einzeln, plus einen
+abschließenden Gate-Job:
+
+| Job                       | Was passiert                                                        |
+|----------------------------|----------------------------------------------------------------------|
+| `build-orchestrator`       | `npm install`, `npm run build` (tsc), `npm run lint` (ESLint)        |
+| `build-product-service`    | `mvn clean package` (Java/Spring)                                    |
+| `build-payment-service`    | `go mod tidy`, `go build ./...`, `go vet ./...`                      |
+| `build-discount-engine`    | `pip install`, Import-Check der FastAPI-App                         |
+| `build-fraud-service`      | `cargo build --release`, `cargo clippy`                              |
+| `build-audit-service`      | `mvn clean package` (Kotlin/Spring)                                  |
+| `build-inventory-service`  | CMake-Configure + Build (C++)                                        |
+| `build-cart-service`       | `bundle install`, Zeitwerk-Autoload-Check (Rails)                    |
+| `all-checks-passed`        | Sammel-Gate über alle obigen Jobs, für Branch Protection             |
+
+`build-inventory-service` und `build-cart-service` fehlten bis zu diesem Fix vollständig in der
+Pipeline, obwohl die Services im Repo existierten - sie wurden nie gebaut oder geprüft.
+
+### Zuletzt behobene Fehler
+
+- **orchestrator**: falsche Import-Pfade in `checkout.aggregate.ts` (7 Events aus nicht
+  existierenden Dateien importiert), fehlende ESLint-Konfiguration, `npm ci` ohne Lockfile
+- **product-service**: ungültiges XML (`&` statt `&amp;`) in `pom.xml`; 6 `public`-Klassen in
+  einer Java-Datei (unzulässig)
+- **audit-service**: `kotlin-maven-plugin` ohne Version/Executions - Kotlin-Quellen wurden nie
+  kompiliert
+- **payment-service**: fehlendes `go.sum` (CI ergänzt jetzt `go mod tidy`)
+- **inventory-service**: Referenz auf nicht existierende `kafka_producer.cpp` in `CMakeLists.txt`,
+  nicht kopierbares `std::atomic`-Feld in einem Struct, das per Zuweisung kopiert wird, fehlende
+  Includes (`<mutex>`, `<iostream>`)
+- **cart-service**: fehlende `ApplicationController`-Klasse, fehlendes `require 'singleton'`,
+  komplett fehlendes Rails-Grundgerüst (`config/application.rb` etc.)
+
+---
 
 ```
-c:\Dev\complexes\
+aldiselfcheckout/
 ├── docker-compose.yml                  # Alle Services + Infrastruktur
 ├── README.md                           # Diese Datei
 ├── .github\workflows\
@@ -137,7 +174,8 @@ c:\Dev\complexes\
 
 ### Ausführen
 ```bash
-cd c:\Dev\complexes
+git clone https://github.com/BlockException/aldiselfcheckout.git
+cd aldiselfcheckout
 docker-compose up -d
 ```
 

@@ -8,7 +8,7 @@ public interface PricingStrategy {
     String getStrategyName();
 }
 
-public class BasePricingStrategy implements PricingStrategy {
+class BasePricingStrategy implements PricingStrategy {
     @Override
     public BigDecimal calculatePrice(Product product, int quantity) {
         return product.getBasePrice().multiply(BigDecimal.valueOf(quantity));
@@ -20,7 +20,7 @@ public class BasePricingStrategy implements PricingStrategy {
     }
 }
 
-public class DiscountPricingStrategy implements PricingStrategy {
+class DiscountPricingStrategy implements PricingStrategy {
     private final BigDecimal discountPercentage;
 
     public DiscountPricingStrategy(BigDecimal discountPercentage) {
@@ -40,7 +40,7 @@ public class DiscountPricingStrategy implements PricingStrategy {
     }
 }
 
-public class BulkBuyPricingStrategy implements PricingStrategy {
+class BulkBuyPricingStrategy implements PricingStrategy {
     private final int bulkThreshold;
     private final BigDecimal bulkDiscount;
 
@@ -64,7 +64,7 @@ public class BulkBuyPricingStrategy implements PricingStrategy {
     }
 }
 
-public class LoyaltyPricingStrategy implements PricingStrategy {
+class LoyaltyPricingStrategy implements PricingStrategy {
     private final BigDecimal loyaltyDiscount;
 
     public LoyaltyPricingStrategy(BigDecimal loyaltyDiscount) {
@@ -83,7 +83,7 @@ public class LoyaltyPricingStrategy implements PricingStrategy {
     }
 }
 
-public class SeasonalPricingStrategy implements PricingStrategy {
+class SeasonalPricingStrategy implements PricingStrategy {
     private final BigDecimal seasonalMultiplier;
 
     public SeasonalPricingStrategy(BigDecimal seasonalMultiplier) {

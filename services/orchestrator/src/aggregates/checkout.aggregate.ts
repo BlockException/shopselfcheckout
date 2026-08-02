@@ -1,13 +1,15 @@
 import { AggregateRoot, EventPublisher } from '@nestjs/cqrs';
 import { v4 as uuidv4 } from 'uuid';
-import { CheckoutInitializedEvent } from '../events/checkout-initialized.event';
-import { ItemScannedEvent } from '../events/item-scanned.event';
-import { ItemRemovedEvent } from '../events/item-removed.event';
-import { PaymentInitiatedEvent } from '../events/payment-initiated.event';
-import { PaymentCompletedEvent } from '../events/payment-completed.event';
-import { PaymentFailedEvent } from '../events/payment-failed.event';
-import { CheckoutCompletedEvent } from '../events/checkout-completed.event';
-import { CheckoutCancelledEvent } from '../events/checkout-cancelled.event';
+import {
+  CheckoutInitializedEvent,
+  ItemScannedEvent,
+  ItemRemovedEvent,
+  PaymentInitiatedEvent,
+  PaymentCompletedEvent,
+  PaymentFailedEvent,
+  CheckoutCompletedEvent,
+  CheckoutCancelledEvent
+} from '../events/checkout-initialized.event';
 
 export interface CartItem {
   productId: string;

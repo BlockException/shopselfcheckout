@@ -1,5 +1,6 @@
 #include <cpprest/http_listener.h>
 #include <cpprest/json.h>
+#include <iostream>
 #include "inventory_manager.h"
 
 using namespace web;

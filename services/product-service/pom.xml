@@ -15,7 +15,7 @@
     <artifactId>product-service</artifactId>
     <version>1.0.0</version>
     <name>Aldi Product Service</name>
-    <description>Product catalog with strategy pricing & Redis caching</description>
+    <description>Product catalog with strategy pricing &amp; Redis caching</description>
 
     <properties>
         <java.version>21</java.version>

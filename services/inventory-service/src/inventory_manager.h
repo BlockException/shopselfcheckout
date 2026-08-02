@@ -2,14 +2,14 @@
 #include <unordered_map>
 #include <string>
 #include <shared_mutex>
-#include <atomic>
+#include <mutex>
 
 struct InventoryItem {
     std::string product_id;
     int quantity;
     int reserved;
     int threshold;
-    std::atomic<double> price;
+    double price;
 };
 
 class InventoryManager {
