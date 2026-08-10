@@ -1,4 +1,4 @@
-FROM gcc:12 AS builder
+FROM gcc:16 AS builder
 WORKDIR /app
 COPY . .
 RUN apt-get update && apt-get install -y cmake libcpprest-dev
