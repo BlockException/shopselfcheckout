@@ -69,3 +69,18 @@ updates:
     directory: "/services/product-service"
     schedule:
       interval: "weekly"
+
+  - package-ecosystem: "docker"
+    directory: "/services/orchestrator"
+    schedule:
+      interval: "weekly"
+
+  - package-ecosystem: "docker"
+    directory: "/services/payment-service"
+    schedule:
+      interval: "weekly"
+
+  - package-ecosystem: "docker"
+    directory: "/services/product-service"
+    schedule:
+      interval: "weekly"
