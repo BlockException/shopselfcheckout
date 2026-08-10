@@ -1,8 +1,8 @@
 package main
 
 import (
-	"aldi-payment-service/internal/handlers"
-	"aldi-payment-service/internal/repository"
+	"shopselfcheckout-payment-service/internal/handlers"
+	"shopselfcheckout-payment-service/internal/repository"
 	"fmt"
 	"log"
 	"os"

@@ -1,7 +1,7 @@
 {
-  "name": "aldi-orchestrator",
+  "name": "shopselfcheckout-orchestrator",
   "version": "1.0.0",
-  "description": "Aldi Self-Checkout Orchestrator with CQRS & Event Sourcing",
+  "description": "ShopSelfCheckout backend orchestrator with CQRS and event sourcing",
   "main": "dist/index.js",
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/index.ts",

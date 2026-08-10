@@ -1,4 +1,4 @@
-package com.aldi.audit.model
+package com.shopselfcheckout.audit.model
 
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document

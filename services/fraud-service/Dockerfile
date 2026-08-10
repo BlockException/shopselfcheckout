@@ -6,6 +6,6 @@ RUN cargo build --release
 
 FROM debian:bookworm-slim
 WORKDIR /app
-COPY --from=builder /app/target/release/aldi_fraud_service .
+COPY --from=builder /app/target/release/shopselfcheckout_fraud_service .
 EXPOSE 8083
-CMD ["./aldi_fraud_service"]
+CMD ["./shopselfcheckout_fraud_service"]

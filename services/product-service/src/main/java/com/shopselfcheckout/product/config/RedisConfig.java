@@ -1,4 +1,4 @@
-package com.aldi.product.config;
+package com.shopselfcheckout.product.config;
 
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;

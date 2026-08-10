@@ -1,9 +1,9 @@
 package handlers
 
 import (
-	"aldi-payment-service/internal/models"
-	"aldi-payment-service/internal/payment"
-	"aldi-payment-service/internal/repository"
+	"shopselfcheckout-payment-service/internal/models"
+	"shopselfcheckout-payment-service/internal/payment"
+	"shopselfcheckout-payment-service/internal/repository"
 	"net/http"
 
 	"github.com/gin-gonic/gin"

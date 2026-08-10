@@ -1,12 +1,12 @@
 development:
   clients:
     default:
-      database: aldi_cart
+      database: shopselfcheckout_cart
       hosts:
         - localhost:27017
 production:
   clients:
     default:
-      database: aldi_cart
+      database: shopselfcheckout_cart
       hosts:
         - mongodb:27017

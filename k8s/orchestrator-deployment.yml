@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: aldi-orchestrator
+  name: shopselfcheckout-orchestrator
   labels:
-    app: aldi-orchestrator
+    app: shopselfcheckout-orchestrator
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: aldi-orchestrator
+      app: shopselfcheckout-orchestrator
   template:
     metadata:
       labels:
-        app: aldi-orchestrator
+        app: shopselfcheckout-orchestrator
     spec:
       containers:
-      - name: aldi-orchestrator
-        image: aldi-orchestrator:latest
+      - name: shopselfcheckout-orchestrator
+        image: shopselfcheckout-orchestrator:latest
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 3000
@@ -26,9 +26,9 @@ spec:
         - name: KAFKA_BROKERS
           value: "kafka-service:9092"
         - name: POSTGRES_URL
-          value: "postgresql://aldi:aldi2026@postgres-service:5432/aldi_main"
+          value: "postgresql://shopselfcheckout:shopselfcheckout2026@postgres-service:5432/shopselfcheckout_main"
         - name: MONGODB_URL
-          value: "mongodb://mongodb-service:27017/aldi_events"
+          value: "mongodb://mongodb-service:27017/shopselfcheckout_events"
         - name: REDIS_URL
           value: "redis://redis-service:6379"
         resources:
@@ -42,10 +42,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: aldi-orchestrator-service
+  name: shopselfcheckout-orchestrator-service
 spec:
   selector:
-    app: aldi-orchestrator
+    app: shopselfcheckout-orchestrator
   ports:
   - protocol: TCP
     port: 3000

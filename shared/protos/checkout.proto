@@ -1,8 +1,8 @@
 syntax = "proto3";
 
-package aldi.checkout.v1;
+package shopselfcheckout.checkout.v1;
 
-option go_package = "github.com/aldi/checkout/v1";
+option go_package = "github.com/shopselfcheckout/checkout/v1";
 
 message CartItem {
   string product_id = 1;

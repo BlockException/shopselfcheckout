@@ -38,7 +38,7 @@ export class CheckoutRepository {
   async save(aggregate: CheckoutAggregate): Promise<void> {
     this.logger.debug(`Saving aggregate for checkout: ${aggregate.checkoutId}`);
     
-    const uncommittedEvents = aggregate.getUncommittedEvents();
+    const uncommittedEvents = aggregate.getUncommittedEvents() as BaseEvent[];
     
     for (const event of uncommittedEvents) {
       const eventDoc = new this.eventModel({

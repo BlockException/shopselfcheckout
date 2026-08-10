@@ -1,5 +1,6 @@
-package com.aldi.product.strategy;
+package com.shopselfcheckout.product.strategy;
 
+import com.shopselfcheckout.product.model.Product;
 import org.springframework.stereotype.Component;
 import java.math.BigDecimal;
 import java.util.HashMap;

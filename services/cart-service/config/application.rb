@@ -8,7 +8,7 @@ Bundler.require(*Rails.groups)
 require "mongoid"
 require "mongoid/railtie"
 
-module AldiCartService
+module ShopSelfCheckoutCartService
   class Application < Rails::Application
     config.load_defaults 7.1
     config.api_only = true

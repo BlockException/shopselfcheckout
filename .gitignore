@@ -1,0 +1,73 @@
+# OS files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Editor settings
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Java and Kotlin
+**/target/
+*.class
+
+# Node.js
+**/node_modules/
+**/dist/
+**/build/
+**/.cache/
+
+# Rust
+**/target/
+
+# Python
+**/__pycache__/
+**/*.py[cod]
+**/*.pyo
+**/*.pyd
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Ruby
+**/.bundle/
+**/vendor/bundle/
+**/tmp/
+**/log/
+
+# C and C++
+**/build/
+**/cmake-build*/
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+compile_commands.json
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+
+# Generated coverage and reports
+coverage/
+reports/
+
+# Docker overrides and local compose files
+docker-compose.override.yml
+docker-compose.local.yml

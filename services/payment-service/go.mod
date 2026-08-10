@@ -1,4 +1,4 @@
-module aldi-payment-service
+module shopselfcheckout-payment-service
 
 go 1.22
 

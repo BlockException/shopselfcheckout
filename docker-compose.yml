@@ -4,7 +4,7 @@ services:
   zookeeper:
     image: confluentinc/cp-zookeeper:7.6.1
     hostname: zookeeper
-    container_name: aldi-zookeeper
+    container_name: shopselfcheckout-zookeeper
     ports:
       - "2181:2181"
     environment:
@@ -14,7 +14,7 @@ services:
   kafka:
     image: confluentinc/cp-kafka:7.6.1
     hostname: kafka
-    container_name: aldi-kafka
+    container_name: shopselfcheckout-kafka
     depends_on:
       - zookeeper
     ports:
@@ -33,21 +33,21 @@ services:
   rabbitmq:
     image: rabbitmq:3.13-management-alpine
     hostname: rabbitmq
-    container_name: aldi-rabbitmq
+    container_name: shopselfcheckout-rabbitmq
     ports:
       - "5672:5672"
       - "15672:15672"
     environment:
-      RABBITMQ_DEFAULT_USER: aldi
-      RABBITMQ_DEFAULT_PASS: aldi2026
+      RABBITMQ_DEFAULT_USER: shopselfcheckout
+      RABBITMQ_DEFAULT_PASS: shopselfcheckout2026
 
   postgres:
     image: postgres:16-alpine
-    container_name: aldi-postgres
+    container_name: shopselfcheckout-postgres
     environment:
-      POSTGRES_USER: aldi
-      POSTGRES_PASSWORD: aldi2026
-      POSTGRES_DB: aldi_main
+      POSTGRES_USER: shopselfcheckout
+      POSTGRES_PASSWORD: shopselfcheckout2026
+      POSTGRES_DB: shopselfcheckout_main
     ports:
       - "5432:5432"
     volumes:
@@ -55,7 +55,7 @@ services:
 
   mongodb:
     image: mongo:7-jammy
-    container_name: aldi-mongodb
+    container_name: shopselfcheckout-mongodb
     ports:
       - "27017:27017"
     volumes:
@@ -63,7 +63,7 @@ services:
 
   redis:
     image: redis:7-alpine
-    container_name: aldi-redis
+    container_name: shopselfcheckout-redis
     ports:
       - "6379:6379"
     volumes:
@@ -71,14 +71,14 @@ services:
 
   consul:
     image: hashicorp/consul:1.18
-    container_name: aldi-consul
+    container_name: shopselfcheckout-consul
     ports:
       - "8500:8500"
     command: agent -server -bootstrap-expect=1 -ui -client=0.0.0.0
 
   prometheus:
     image: prom/prometheus:v2.51.2
-    container_name: aldi-prometheus
+    container_name: shopselfcheckout-prometheus
     ports:
       - "9090:9090"
     volumes:
@@ -86,7 +86,7 @@ services:
 
   grafana:
     image: grafana/grafana:10.4.2
-    container_name: aldi-grafana
+    container_name: shopselfcheckout-grafana
     ports:
       - "3002:3000"
     depends_on:
@@ -96,7 +96,7 @@ services:
 
   jaeger:
     image: jaegertracing/all-in-one:1.57
-    container_name: aldi-jaeger
+    container_name: shopselfcheckout-jaeger
     ports:
       - "16686:16686"
       - "4317:4317"
@@ -106,7 +106,7 @@ services:
 
   orchestrator:
     build: ./services/orchestrator
-    container_name: aldi-orchestrator
+    container_name: shopselfcheckout-orchestrator
     ports:
       - "3000:3000"
     depends_on:
@@ -119,8 +119,8 @@ services:
     environment:
       NODE_ENV: production
       KAFKA_BROKERS: kafka:9092
-      POSTGRES_URL: postgresql://aldi:aldi2026@postgres:5432/aldi_main
-      MONGODB_URL: mongodb://mongodb:27017/aldi_events
+      POSTGRES_URL: postgresql://shopselfcheckout:shopselfcheckout2026@postgres:5432/shopselfcheckout_main
+      MONGODB_URL: mongodb://mongodb:27017/shopselfcheckout_events
       REDIS_URL: redis://redis:6379
       CONSUL_HOST: consul
       CONSUL_PORT: 8500
@@ -128,7 +128,7 @@ services:
 
   product-service:
     build: ./services/product-service
-    container_name: aldi-product-service
+    container_name: shopselfcheckout-product-service
     ports:
       - "8080:8080"
     depends_on:
@@ -139,9 +139,9 @@ services:
       - jaeger
     environment:
       SPRING_PROFILES_ACTIVE: docker
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/aldi_main
-      SPRING_DATASOURCE_USERNAME: aldi
-      SPRING_DATASOURCE_PASSWORD: aldi2026
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/shopselfcheckout_main
+      SPRING_DATASOURCE_USERNAME: shopselfcheckout
+      SPRING_DATASOURCE_PASSWORD: shopselfcheckout2026
       SPRING_DATA_REDIS_HOST: redis
       SPRING_DATA_REDIS_PORT: 6379
       KAFKA_BOOTSTRAP_SERVERS: kafka:9092
@@ -150,7 +150,7 @@ services:
 
   cart-service:
     build: ./services/cart-service
-    container_name: aldi-cart-service
+    container_name: shopselfcheckout-cart-service
     ports:
       - "3001:3001"
     depends_on:
@@ -160,14 +160,14 @@ services:
       - consul
     environment:
       RAILS_ENV: production
-      MONGODB_URL: mongodb://mongodb:27017/aldi_cart
-      RABBITMQ_URL: amqp://aldi:aldi2026@rabbitmq:5672
+      MONGODB_URL: mongodb://mongodb:27017/shopselfcheckout_cart
+      RABBITMQ_URL: amqp://shopselfcheckout:shopselfcheckout2026@rabbitmq:5672
       CONSUL_HOST: consul
       CONSUL_PORT: 8500
 
   payment-service:
     build: ./services/payment-service
-    container_name: aldi-payment-service
+    container_name: shopselfcheckout-payment-service
     ports:
       - "8081:8081"
     depends_on:
@@ -177,16 +177,16 @@ services:
     environment:
       DB_HOST: postgres
       DB_PORT: 5432
-      DB_USER: aldi
-      DB_PASSWORD: aldi2026
-      DB_NAME: aldi_payments
+      DB_USER: shopselfcheckout
+      DB_PASSWORD: shopselfcheckout2026
+      DB_NAME: shopselfcheckout_payments
       KAFKA_BROKERS: kafka:9092
       CONSUL_HOST: consul
       CONSUL_PORT: 8500
 
   inventory-service:
     build: ./services/inventory-service
-    container_name: aldi-inventory-service
+    container_name: shopselfcheckout-inventory-service
     ports:
       - "8082:8082"
     depends_on:
@@ -202,7 +202,7 @@ services:
 
   fraud-service:
     build: ./services/fraud-service
-    container_name: aldi-fraud-service
+    container_name: shopselfcheckout-fraud-service
     ports:
       - "8083:8083"
     depends_on:
@@ -210,14 +210,14 @@ services:
       - kafka
       - consul
     environment:
-      MONGODB_URL: mongodb://mongodb:27017/aldi_fraud
+      MONGODB_URL: mongodb://mongodb:27017/shopselfcheckout_fraud
       KAFKA_BROKERS: kafka:9092
       CONSUL_HOST: consul
       CONSUL_PORT: 8500
 
   discount-engine:
     build: ./services/discount-engine
-    container_name: aldi-discount-engine
+    container_name: shopselfcheckout-discount-engine
     ports:
       - "5000:5000"
     depends_on:
@@ -225,14 +225,14 @@ services:
       - redis
       - consul
     environment:
-      DATABASE_URL: postgresql://aldi:aldi2026@postgres:5432/aldi_main
+      DATABASE_URL: postgresql://shopselfcheckout:shopselfcheckout2026@postgres:5432/shopselfcheckout_main
       REDIS_URL: redis://redis:6379
       CONSUL_HOST: consul
       CONSUL_PORT: 8500
 
   audit-service:
     build: ./services/audit-service
-    container_name: aldi-audit-service
+    container_name: shopselfcheckout-audit-service
     ports:
       - "8084:8084"
     depends_on:
@@ -241,7 +241,7 @@ services:
       - consul
     environment:
       SPRING_PROFILES_ACTIVE: docker
-      SPRING_DATA_MONGODB_URI: mongodb://mongodb:27017/aldi_audit
+      SPRING_DATA_MONGODB_URI: mongodb://mongodb:27017/shopselfcheckout_audit
       KAFKA_BOOTSTRAP_SERVERS: kafka:9092
       CONSUL_HOST: consul
       CONSUL_PORT: 8500

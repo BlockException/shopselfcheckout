@@ -11,14 +11,14 @@
         <relativePath/>
     </parent>
 
-    <groupId>com.aldi</groupId>
+    <groupId>com.shopselfcheckout</groupId>
     <artifactId>audit-service</artifactId>
     <version>1.0.0</version>
-    <name>Aldi Audit Log Service</name>
+    <name>ShopSelfCheckout Audit Log Service</name>
 
     <properties>
         <java.version>21</java.version>
-        <kotlin.version>1.9.22</kotlin.version>
+        <kotlin.version>2.1.10</kotlin.version>
     </properties>
 
     <dependencies>

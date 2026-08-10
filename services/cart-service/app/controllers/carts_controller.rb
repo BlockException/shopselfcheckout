@@ -8,7 +8,12 @@ class CartsController < ApplicationController
 
   def show
     decorated = LoyaltyPointDecorator.new(DiscountDecorator.new(TaxCalculationDecorator.new(@cart)))
-    render json: decorated
+    render json: {
+      cart: @cart,
+      total_amount: decorated.total_amount,
+      total_tax: decorated.total_tax,
+      loyalty_points: decorated.loyalty_points
+    }
   end
 
   def create

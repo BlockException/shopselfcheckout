@@ -1,27 +1,34 @@
-package com.aldi.product.service;
+package com.shopselfcheckout.product.service;
 
-import com.aldi.product.model.Product;
-import com.aldi.product.repository.ProductRepository;
-import com.aldi.product.strategy.PricingStrategyFactory;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import com.shopselfcheckout.product.model.Product;
+import com.shopselfcheckout.product.repository.ProductRepository;
+import com.shopselfcheckout.product.strategy.PricingStrategyFactory;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
-@Slf4j
 public class ProductService {
+
+    private static final Logger log = LoggerFactory.getLogger(ProductService.class);
 
     private final ProductRepository productRepository;
     private final PricingStrategyFactory pricingStrategyFactory;
     private final KafkaTemplate<String, Object> kafkaTemplate;
+
+    public ProductService(ProductRepository productRepository, PricingStrategyFactory pricingStrategyFactory,
+                          KafkaTemplate<String, Object> kafkaTemplate) {
+        this.productRepository = productRepository;
+        this.pricingStrategyFactory = pricingStrategyFactory;
+        this.kafkaTemplate = kafkaTemplate;
+    }
 
     @Cacheable(value = "products", key = "#id")
     public Optional<Product> getProductById(String id) {

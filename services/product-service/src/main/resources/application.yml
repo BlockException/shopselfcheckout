@@ -3,9 +3,9 @@ spring:
     name: product-service
   
   datasource:
-    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/aldi_main}
-    username: ${SPRING_DATASOURCE_USERNAME:aldi}
-    password: ${SPRING_DATASOURCE_PASSWORD:aldi2026}
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/shopselfcheckout_main}
+    username: ${SPRING_DATASOURCE_USERNAME:shopselfcheckout}
+    password: ${SPRING_DATASOURCE_PASSWORD:shopselfcheckout2026}
     driver-class-name: org.postgresql.Driver
   
   jpa:
@@ -33,4 +33,4 @@ server:
 
 logging:
   level:
-    com.aldi.product: DEBUG
+    com.shopselfcheckout.product: DEBUG

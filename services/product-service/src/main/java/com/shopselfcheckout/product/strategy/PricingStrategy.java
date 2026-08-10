@@ -1,6 +1,6 @@
-package com.aldi.product.strategy;
+package com.shopselfcheckout.product.strategy;
 
-import com.aldi.product.model.Product;
+import com.shopselfcheckout.product.model.Product;
 import java.math.BigDecimal;
 
 public interface PricingStrategy {

@@ -1,7 +1,7 @@
 package repository
 
 import (
-	"aldi-payment-service/internal/models"
+	"shopselfcheckout-payment-service/internal/models"
 	"gorm.io/gorm"
 )
 

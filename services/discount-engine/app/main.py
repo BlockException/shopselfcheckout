@@ -3,7 +3,7 @@ from pydantic import BaseModel
 from typing import List, Optional
 import abc
 
-app = FastAPI(title="Aldi Discount Engine")
+app = FastAPI(title="ShopSelfCheckout Discount Engine")
 
 class CartItem(BaseModel):
     product_id: str

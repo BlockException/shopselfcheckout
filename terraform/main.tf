@@ -19,46 +19,46 @@ provider "kubernetes" {
   config_path = "~/.kube/config"
 }
 
-resource "aws_vpc" "aldi_vpc" {
+resource "aws_vpc" "shopselfcheckout_vpc" {
   cidr_block = "10.0.0.0/16"
   tags = {
-    Name = "aldi-vpc"
+    Name = "shopselfcheckout-vpc"
   }
 }
 
 resource "aws_subnet" "public_subnet" {
-  vpc_id                  = aws_vpc.aldi_vpc.id
+  vpc_id                  = aws_vpc.shopselfcheckout_vpc.id
   cidr_block              = "10.0.1.0/24"
   availability_zone       = "eu-central-1a"
   map_public_ip_on_launch = true
 
   tags = {
-    Name = "aldi-public-subnet"
+    Name = "shopselfcheckout-public-subnet"
   }
 }
 
 resource "aws_eip" "eip" {
   vpc = true
   tags = {
-    Name = "aldi-eip"
+    Name = "shopselfcheckout-eip"
   }
 }
 
 resource "aws_internet_gateway" "igw" {
-  vpc_id = aws_vpc.aldi_vpc.id
+  vpc_id = aws_vpc.shopselfcheckout_vpc.id
   tags = {
-    Name = "aldi-igw"
+    Name = "shopselfcheckout-igw"
   }
 }
 
 resource "aws_route_table" "public" {
-  vpc_id = aws_vpc.aldi_vpc.id
+  vpc_id = aws_vpc.shopselfcheckout_vpc.id
   route {
     cidr_block = "0.0.0.0/0"
     gateway_id = aws_internet_gateway.igw.id
   }
   tags = {
-    Name = "aldi-public-rt"
+    Name = "shopselfcheckout-public-rt"
   }
 }
 
@@ -68,7 +68,7 @@ resource "aws_route_table_association" "public" {
 }
 
 output "vpc_id" {
-  value = aws_vpc.aldi_vpc.id
+  value = aws_vpc.shopselfcheckout_vpc.id
 }
 
 output "public_subnet_id" {

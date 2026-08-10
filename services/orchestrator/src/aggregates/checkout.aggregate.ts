@@ -138,7 +138,7 @@ export class CheckoutAggregate extends AggregateRoot {
   }
 
   private onCheckoutInitializedEvent(event: CheckoutInitializedEvent): void {
-    this.checkoutId = event.checkoutId;
+    this.checkoutId = event.aggregateId;
     this.terminalId = event.terminalId;
     this.customerId = event.customerId;
     this.status = CheckoutStatus.SCANNING;

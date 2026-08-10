@@ -5,13 +5,13 @@ import { AppModule } from './app.module';
 import 'reflect-metadata';
 
 async function bootstrap() {
-  const logger = new Logger('AldiOrchestrator');
+  const logger = new Logger('ShopSelfCheckoutOrchestrator');
   const app = await NestFactory.create(AppModule);
   
   app.useGlobalPipes(new ValidationPipe());
   
   const config = new DocumentBuilder()
-    .setTitle('Aldi Self-Checkout Orchestrator')
+    .setTitle('ShopSelfCheckout Orchestrator')
     .setDescription('CQRS & Event Sourcing API')
     .setVersion('1.0')
     .build();

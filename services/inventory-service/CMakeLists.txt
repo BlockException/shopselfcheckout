@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
-project(aldi_inventory_service)
+project(shopselfcheckout_inventory_service)
 set(CMAKE_CXX_STANDARD 20)
 find_package(cpprestsdk REQUIRED)
 add_executable(inventory_service src/main.cpp src/inventory_manager.cpp)

@@ -1,6 +1,6 @@
-package com.aldi.product.repository;
+package com.shopselfcheckout.product.repository;
 
-import com.aldi.product.model.Product;
+import com.shopselfcheckout.product.model.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

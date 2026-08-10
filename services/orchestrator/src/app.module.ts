@@ -26,7 +26,7 @@ const Repositories = [CheckoutRepository];
     CqrsModule,
     MongooseModule.forRootAsync({
       useFactory: (configService: ConfigService) => ({
-        uri: configService.get<string>('MONGODB_URL', 'mongodb://localhost:27017/aldi_events')
+        uri: configService.get<string>('MONGODB_URL', 'mongodb://localhost:27017/shopselfcheckout_events')
       }),
       inject: [ConfigService]
     }),

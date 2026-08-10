@@ -35,7 +35,8 @@ void handle_post(http_request request) {
 void handle_get(http_request request) {
     auto path = request.relative_uri().path();
     if (path.find("/api/v1/inventory/") == 0) {
-        auto product_id = path.substr(17);
+        const auto prefix = std::string("/api/v1/inventory/");
+        auto product_id = path.substr(prefix.size());
         int available = manager.get_available(product_id);
         json::value response;
         response["product_id"] = json::value::string(product_id);

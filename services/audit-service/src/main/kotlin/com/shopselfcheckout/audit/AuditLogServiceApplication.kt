@@ -1,4 +1,4 @@
-package com.aldi.audit
+package com.shopselfcheckout.audit
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
