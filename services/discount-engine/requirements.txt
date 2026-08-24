@@ -1,5 +1,5 @@
 fastapi==0.141.1
-uvicorn==0.52.1
+uvicorn==0.52.4
 sqlalchemy==2.0.51
 psycopg2-binary==2.9.9
 sqlalchemy==2.0.25
