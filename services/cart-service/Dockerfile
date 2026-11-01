@@ -1,4 +1,4 @@
-FROM ruby:4.0.7-alpine
+FROM ruby:4.0.8-alpine
 RUN apk add --no-cache build-base postgresql-dev
 WORKDIR /app
 COPY Gemfile .
