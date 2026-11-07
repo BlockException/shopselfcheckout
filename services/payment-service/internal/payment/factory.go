@@ -1,6 +1,11 @@
 package payment
 
-import "fmt"
+import (
+	"errors"
+	"fmt"
+)
+
+var ErrUnsupportedMethod = errors.New("unsupported payment method")
 
 type PaymentProcessor interface {
 	Process(amount float64, currency string) (string, error)
@@ -44,21 +49,21 @@ func (g *GooglePayProcessor) Process(amount float64, currency string) (string, e
 }
 func (g *GooglePayProcessor) Refund(transactionID string) error { return nil }
 
-func NewPaymentProcessor(method string) PaymentProcessor {
+func NewPaymentProcessor(method string) (PaymentProcessor, error) {
 	switch method {
 	case "credit_card":
-		return &CreditCardProcessor{}
+		return &CreditCardProcessor{}, nil
 	case "paypal":
-		return &PayPalProcessor{}
+		return &PayPalProcessor{}, nil
 	case "cash":
-		return &CashProcessor{}
+		return &CashProcessor{}, nil
 	case "gift_card":
-		return &GiftCardProcessor{}
+		return &GiftCardProcessor{}, nil
 	case "apple_pay":
-		return &ApplePayProcessor{}
+		return &ApplePayProcessor{}, nil
 	case "google_pay":
-		return &GooglePayProcessor{}
+		return &GooglePayProcessor{}, nil
 	default:
-		return &CashProcessor{}
+		return nil, ErrUnsupportedMethod
 	}
 }

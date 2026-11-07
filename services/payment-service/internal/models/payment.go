@@ -1,7 +1,10 @@
 package models
 
 import (
+	"crypto/rand"
+	"fmt"
 	"time"
+
 	"gorm.io/gorm"
 )
 
@@ -20,7 +23,11 @@ type Payment struct {
 }
 
 func (p *Payment) BeforeCreate(tx *gorm.DB) error {
-	p.ID = generateUUID()
+	id, err := generateUUID()
+	if err != nil {
+		return err
+	}
+	p.ID = id
 	p.CreatedAt = time.Now()
 	p.UpdatedAt = time.Now()
 	return nil
@@ -31,7 +38,13 @@ func (p *Payment) BeforeUpdate(tx *gorm.DB) error {
 	return nil
 }
 
-func generateUUID() string {
-	// Simplified for demo
-	return "uuid-" + time.Now().Format("20060102150405")
+func generateUUID() (string, error) {
+	var id [16]byte
+	if _, err := rand.Read(id[:]); err != nil {
+		return "", err
+	}
+	id[6] = (id[6] & 0x0f) | 0x40
+	id[8] = (id[8] & 0x3f) | 0x80
+
+	return fmt.Sprintf("%x-%x-%x-%x-%x", id[0:4], id[4:6], id[6:8], id[8:10], id[10:16]), nil
 }
