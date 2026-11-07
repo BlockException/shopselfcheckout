@@ -7,9 +7,9 @@ import 'reflect-metadata';
 async function bootstrap() {
   const logger = new Logger('ShopSelfCheckoutOrchestrator');
   const app = await NestFactory.create(AppModule);
-  
+
   app.useGlobalPipes(new ValidationPipe());
-  
+
   const config = new DocumentBuilder()
     .setTitle('ShopSelfCheckout Orchestrator')
     .setDescription('CQRS & Event Sourcing API')
@@ -17,7 +17,7 @@ async function bootstrap() {
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
-  
+
   const port = process.env.PORT || 3000;
   await app.listen(port);
   logger.log(`Orchestrator is running on port ${port}`);

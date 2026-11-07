@@ -1,11 +1,12 @@
 package main
 
 import (
-	"shopselfcheckout-payment-service/internal/handlers"
-	"shopselfcheckout-payment-service/internal/repository"
 	"fmt"
 	"log"
 	"os"
+	"shopselfcheckout-payment-service/internal/handlers"
+	"shopselfcheckout-payment-service/internal/models"
+	"shopselfcheckout-payment-service/internal/repository"
 
 	"github.com/gin-gonic/gin"
 	"gorm.io/driver/postgres"
@@ -26,6 +27,9 @@ func main() {
 	if err != nil {
 		log.Fatal("Failed to connect to database:", err)
 	}
+	if err := db.AutoMigrate(&models.Payment{}); err != nil {
+		log.Fatal("Failed to migrate database:", err)
+	}
 
 	repo := repository.NewPaymentRepository(db)
 	paymentHandler := handlers.NewPaymentHandler(repo)
@@ -44,5 +48,7 @@ func main() {
 		port = "8081"
 	}
 	log.Printf("Server starting on port %s", port)
-	r.Run(":" + port)
+	if err := r.Run(":" + port); err != nil {
+		log.Fatal("Failed to start server:", err)
+	}
 }

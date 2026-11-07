@@ -3,6 +3,16 @@ import { CommandBus } from '@nestjs/cqrs';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { InitializeCheckoutCommand, ScanItemCommand, RemoveItemCommand, InitiatePaymentCommand, CancelCheckoutCommand } from '../commands/initialize-checkout.command';
 
+interface ScanItemRequest {
+  productId: string;
+  ean: string;
+  name: string;
+  quantity: number;
+  unitPrice: number;
+  discountAmount: number;
+  taxRate: number;
+}
+
 @ApiTags('checkout')
 @Controller('api/v1/checkouts')
 export class CheckoutController {
@@ -29,7 +39,7 @@ export class CheckoutController {
   @ApiOperation({ summary: 'Scan an item' })
   async scanItem(
     @Param('checkoutId') checkoutId: string,
-    @Body() body: any
+    @Body() body: ScanItemRequest
   ): Promise<void> {
     await this.commandBus.execute(
       new ScanItemCommand(

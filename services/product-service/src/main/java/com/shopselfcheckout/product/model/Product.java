@@ -167,11 +167,3 @@ public class Product {
         this.updatedAt = updatedAt;
     }
 }
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-}
-
