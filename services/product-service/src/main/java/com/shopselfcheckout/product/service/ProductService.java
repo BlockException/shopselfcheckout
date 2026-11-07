@@ -59,9 +59,9 @@ public class ProductService {
     }
 
     public BigDecimal calculatePrice(String productId, int quantity, String... pricingStrategies) {
-        log.debug("Calculating price for product: {}, quantity: {}, strategies: {}",
+        log.debug("Calculating price for product: {}, quantity: {}, strategies: {}", 
             productId, quantity, pricingStrategies);
-
+        
         Product product = productRepository.findById(productId)
             .orElseThrow(() -> new RuntimeException("Product not found"));
 

@@ -77,7 +77,6 @@ docker compose up -d
 ## Development Notes
 
 - Backend-only repository
-- The orchestrator requires Node.js 22.13 or newer for local development and uses Node.js 22 in Docker.
 - Generated artifacts and local caches are excluded via the root `.gitignore`
 
 ## Documentation

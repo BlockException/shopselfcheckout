@@ -22,10 +22,10 @@ export class Event extends Document {
   version: number;
 
   @Prop({ type: Object })
-  metadata: Record<string, unknown>;
+  metadata: Record<string, any>;
 
-  @Prop({ type: Object, required: true })
-  payload: Record<string, unknown>;
+  @Prop({ type: Object })
+  payload: any;
 }
 
 export const EventSchema = SchemaFactory.createForClass(Event);

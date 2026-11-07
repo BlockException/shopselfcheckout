@@ -1,18 +1,16 @@
 from fastapi import FastAPI
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel
 from typing import List, Optional
 import abc
 
 app = FastAPI(title="ShopSelfCheckout Discount Engine")
 
 class CartItem(BaseModel):
-    model_config = ConfigDict(allow_inf_nan=False)
-
     product_id: str
     ean: str
     name: str
-    quantity: int = Field(gt=0)
-    unit_price: float = Field(ge=0)
+    quantity: int
+    unit_price: float
     categories: List[str]
 
 class DiscountRequest(BaseModel):
@@ -43,11 +41,11 @@ class PercentageDiscountRule(DiscountRule):
             if self.category and self.category not in item.categories:
                 continue
             applicable.append(item)
-
+        
         total = sum(i.unit_price * i.quantity for i in applicable)
         if total < self.min_amount:
             return 0.0, {}
-
+        
         discount = total * self.percentage
         return discount, {
             "rule": "percentage",
@@ -66,7 +64,7 @@ class BulkDiscountRule(DiscountRule):
         total_quantity = sum(i.quantity for i in items)
         if total_quantity < self.min_quantity:
             return 0.0, {}
-
+        
         discount = self.discount_per_item * total_quantity
         return discount, {
             "rule": "bulk",
@@ -82,7 +80,7 @@ class LoyaltyDiscountRule(DiscountRule):
     def apply(self, items: List[CartItem], is_loyalty: bool) -> tuple[float, dict]:
         if not is_loyalty:
             return 0.0, {}
-
+        
         total = sum(i.unit_price * i.quantity for i in items)
         discount = total * self.percentage
         return discount, {
@@ -104,15 +102,15 @@ class BuyXGetYFreeRule(DiscountRule):
             if self.category and self.category not in item.categories:
                 continue
             applicable.append(item)
-
+        
         total_qty = sum(i.quantity for i in applicable)
         if total_qty < self.x + self.y:
             return 0.0, {}
-
+        
         free_items = (total_qty // (self.x + self.y)) * self.y
         avg_price = sum(i.unit_price * i.quantity for i in applicable) / total_qty
         discount = free_items * avg_price
-
+        
         return discount, {
             "rule": "buy_x_get_y",
             "x": self.x,
@@ -131,14 +129,11 @@ class DiscountEngine:
     def calculate(self, items: List[CartItem], is_loyalty: bool) -> DiscountResult:
         total_discount = 0.0
         applied = []
-        subtotal = sum(item.unit_price * item.quantity for item in items)
 
         for rule in self.rules:
             discount, info = rule.apply(items, is_loyalty)
-            discount = min(discount, max(0.0, subtotal - total_discount))
             if discount > 0:
                 total_discount += discount
-                info["discount"] = discount
                 applied.append(info)
 
         return DiscountResult(

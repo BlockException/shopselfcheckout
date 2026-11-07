@@ -1,6 +1,6 @@
 import { CommandHandler, ICommandHandler, EventPublisher } from '@nestjs/cqrs';
-import { Logger } from '@nestjs/common';
-import { InitializeCheckoutCommand, ScanItemCommand, RemoveItemCommand, InitiatePaymentCommand, CompletePaymentCommand, CompleteCheckoutCommand, CancelCheckoutCommand } from '../initialize-checkout.command';
+import { Injectable, Logger } from '@nestjs/common';
+import { InitializeCheckoutCommand, ScanItemCommand, RemoveItemCommand, InitiatePaymentCommand, CompleteCheckoutCommand, CancelCheckoutCommand } from '../initialize-checkout.command';
 import { CheckoutAggregate } from '../../aggregates/checkout.aggregate';
 import { CheckoutRepository } from '../../repositories/checkout.repository';
 
@@ -15,15 +15,15 @@ export class InitializeCheckoutHandler implements ICommandHandler<InitializeChec
 
   async execute(command: InitializeCheckoutCommand): Promise<string> {
     this.logger.debug(`Initializing checkout for terminal: ${command.terminalId}`);
-
+    
     const aggregate = this.publisher.mergeObjectContext(
       new CheckoutAggregate()
     );
-
+    
     aggregate.initialize(command.terminalId, command.customerId);
     await this.repository.save(aggregate);
     aggregate.commit();
-
+    
     return aggregate.checkoutId;
   }
 }
@@ -39,11 +39,11 @@ export class ScanItemHandler implements ICommandHandler<ScanItemCommand> {
 
   async execute(command: ScanItemCommand): Promise<void> {
     this.logger.debug(`Scanning item for checkout: ${command.checkoutId}`);
-
+    
     const aggregate = this.publisher.mergeObjectContext(
       await this.repository.findById(command.checkoutId)
     );
-
+    
     aggregate.scanItem({
       productId: command.productId,
       ean: command.ean,
@@ -53,7 +53,7 @@ export class ScanItemHandler implements ICommandHandler<ScanItemCommand> {
       discountAmount: command.discountAmount,
       taxRate: command.taxRate
     });
-
+    
     await this.repository.save(aggregate);
     aggregate.commit();
   }
@@ -70,7 +70,7 @@ export class RemoveItemHandler implements ICommandHandler<RemoveItemCommand> {
     const aggregate = this.publisher.mergeObjectContext(
       await this.repository.findById(command.checkoutId)
     );
-
+    
     aggregate.removeItem(command.productId, command.quantity);
     await this.repository.save(aggregate);
     aggregate.commit();
@@ -88,26 +88,8 @@ export class InitiatePaymentHandler implements ICommandHandler<InitiatePaymentCo
     const aggregate = this.publisher.mergeObjectContext(
       await this.repository.findById(command.checkoutId)
     );
-
+    
     aggregate.initiatePayment(command.paymentMethod);
-    await this.repository.save(aggregate);
-    aggregate.commit();
-  }
-}
-
-@CommandHandler(CompletePaymentCommand)
-export class CompletePaymentHandler implements ICommandHandler<CompletePaymentCommand> {
-  constructor(
-    private readonly repository: CheckoutRepository,
-    private readonly publisher: EventPublisher
-  ) {}
-
-  async execute(command: CompletePaymentCommand): Promise<void> {
-    const aggregate = this.publisher.mergeObjectContext(
-      await this.repository.findById(command.checkoutId)
-    );
-
-    aggregate.completePayment(command.transactionId);
     await this.repository.save(aggregate);
     aggregate.commit();
   }
@@ -124,7 +106,7 @@ export class CompleteCheckoutHandler implements ICommandHandler<CompleteCheckout
     const aggregate = this.publisher.mergeObjectContext(
       await this.repository.findById(command.checkoutId)
     );
-
+    
     aggregate.completeCheckout();
     await this.repository.save(aggregate);
     aggregate.commit();
@@ -142,7 +124,7 @@ export class CancelCheckoutHandler implements ICommandHandler<CancelCheckoutComm
     const aggregate = this.publisher.mergeObjectContext(
       await this.repository.findById(command.checkoutId)
     );
-
+    
     aggregate.cancelCheckout(command.reason);
     await this.repository.save(aggregate);
     aggregate.commit();

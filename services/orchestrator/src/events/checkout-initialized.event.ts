@@ -9,10 +9,9 @@ export class CheckoutInitializedEvent extends BaseEvent {
     aggregateId: string,
     terminalId: string,
     customerId: string | undefined,
-    timestamp: Date,
-    version = 0
+    timestamp: Date
   ) {
-    super(aggregateId, 'CheckoutAggregate', 'CheckoutInitializedEvent', timestamp, {}, version);
+    super(aggregateId, 'CheckoutAggregate', 'CheckoutInitializedEvent', timestamp);
     this.terminalId = terminalId;
     this.customerId = customerId;
   }
@@ -24,10 +23,9 @@ export class ItemScannedEvent extends BaseEvent {
   constructor(
     aggregateId: string,
     item: CartItem,
-    timestamp: Date,
-    version = 0
+    timestamp: Date
   ) {
-    super(aggregateId, 'CheckoutAggregate', 'ItemScannedEvent', timestamp, {}, version);
+    super(aggregateId, 'CheckoutAggregate', 'ItemScannedEvent', timestamp);
     this.item = item;
   }
 }
@@ -40,10 +38,9 @@ export class ItemRemovedEvent extends BaseEvent {
     aggregateId: string,
     productId: string,
     quantity: number,
-    timestamp: Date,
-    version = 0
+    timestamp: Date
   ) {
-    super(aggregateId, 'CheckoutAggregate', 'ItemRemovedEvent', timestamp, {}, version);
+    super(aggregateId, 'CheckoutAggregate', 'ItemRemovedEvent', timestamp);
     this.productId = productId;
     this.quantity = quantity;
   }
@@ -57,10 +54,9 @@ export class PaymentInitiatedEvent extends BaseEvent {
     aggregateId: string,
     paymentMethod: string,
     amount: number,
-    timestamp: Date,
-    version = 0
+    timestamp: Date
   ) {
-    super(aggregateId, 'CheckoutAggregate', 'PaymentInitiatedEvent', timestamp, {}, version);
+    super(aggregateId, 'CheckoutAggregate', 'PaymentInitiatedEvent', timestamp);
     this.paymentMethod = paymentMethod;
     this.amount = amount;
   }
@@ -72,10 +68,9 @@ export class PaymentCompletedEvent extends BaseEvent {
   constructor(
     aggregateId: string,
     transactionId: string,
-    timestamp: Date,
-    version = 0
+    timestamp: Date
   ) {
-    super(aggregateId, 'CheckoutAggregate', 'PaymentCompletedEvent', timestamp, {}, version);
+    super(aggregateId, 'CheckoutAggregate', 'PaymentCompletedEvent', timestamp);
     this.transactionId = transactionId;
   }
 }
@@ -88,10 +83,9 @@ export class PaymentFailedEvent extends BaseEvent {
     aggregateId: string,
     errorCode: string,
     errorMessage: string,
-    timestamp: Date,
-    version = 0
+    timestamp: Date
   ) {
-    super(aggregateId, 'CheckoutAggregate', 'PaymentFailedEvent', timestamp, {}, version);
+    super(aggregateId, 'CheckoutAggregate', 'PaymentFailedEvent', timestamp);
     this.errorCode = errorCode;
     this.errorMessage = errorMessage;
   }
@@ -100,10 +94,9 @@ export class PaymentFailedEvent extends BaseEvent {
 export class CheckoutCompletedEvent extends BaseEvent {
   constructor(
     aggregateId: string,
-    timestamp: Date,
-    version = 0
+    timestamp: Date
   ) {
-    super(aggregateId, 'CheckoutAggregate', 'CheckoutCompletedEvent', timestamp, {}, version);
+    super(aggregateId, 'CheckoutAggregate', 'CheckoutCompletedEvent', timestamp);
   }
 }
 
@@ -113,10 +106,9 @@ export class CheckoutCancelledEvent extends BaseEvent {
   constructor(
     aggregateId: string,
     reason: string,
-    timestamp: Date,
-    version = 0
+    timestamp: Date
   ) {
-    super(aggregateId, 'CheckoutAggregate', 'CheckoutCancelledEvent', timestamp, {}, version);
+    super(aggregateId, 'CheckoutAggregate', 'CheckoutCancelledEvent', timestamp);
     this.reason = reason;
   }
 }

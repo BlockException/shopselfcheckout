@@ -92,21 +92,6 @@ export class InitiatePaymentCommand implements ICommand {
   }
 }
 
-export class CompletePaymentCommand implements ICommand {
-  @IsString()
-  @IsNotEmpty()
-  public readonly checkoutId: string;
-
-  @IsString()
-  @IsNotEmpty()
-  public readonly transactionId: string;
-
-  constructor(checkoutId: string, transactionId: string) {
-    this.checkoutId = checkoutId;
-    this.transactionId = transactionId;
-  }
-}
-
 export class CompleteCheckoutCommand implements ICommand {
   @IsString()
   @IsNotEmpty()
