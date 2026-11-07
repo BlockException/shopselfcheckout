@@ -17,7 +17,7 @@ private:
     std::unordered_map<std::string, InventoryItem> inventory;
     mutable std::shared_mutex mutex;
 public:
-    void add_item(const std::string& product_id, int quantity, double price, int threshold);
+    bool add_item(const std::string& product_id, int quantity, double price, int threshold);
     bool reserve_item(const std::string& product_id, int quantity);
     bool release_reservation(const std::string& product_id, int quantity);
     bool deduct_item(const std::string& product_id, int quantity);

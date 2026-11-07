@@ -3,7 +3,7 @@ import { CqrsModule } from '@nestjs/cqrs';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { CheckoutController } from './controllers/checkout.controller';
-import { InitializeCheckoutHandler, ScanItemHandler, RemoveItemHandler, InitiatePaymentHandler, CompleteCheckoutHandler, CancelCheckoutHandler } from './commands/handlers/initialize-checkout.handler';
+import { InitializeCheckoutHandler, ScanItemHandler, RemoveItemHandler, InitiatePaymentHandler, CompletePaymentHandler, CompleteCheckoutHandler, CancelCheckoutHandler } from './commands/handlers/initialize-checkout.handler';
 import { CheckoutRepository } from './repositories/checkout.repository';
 import { CheckoutSaga } from './sagas/checkout.saga';
 import { DatabaseConfigModule } from './config/database.config';
@@ -13,6 +13,7 @@ const CommandHandlers = [
   ScanItemHandler,
   RemoveItemHandler,
   InitiatePaymentHandler,
+  CompletePaymentHandler,
   CompleteCheckoutHandler,
   CancelCheckoutHandler
 ];
